@@ -1,0 +1,41 @@
+# 🔒 Eseguibili
+
+*.exe
+*.msi
+*.bat
+
+# 🔒 Build PyInstaller
+
+dist/
+build/
+*.spec
+
+# 🔒 Python cache
+
+**pycache**/
+*.pyc
+*.pyo
+*.pyd
+
+# 🔒 Virtual environment
+
+venv/
+env/
+.venv/
+
+# 🔒 File di sistema
+
+.DS_Store
+Thumbs.db
+
+# 🔒 Log e temporanei
+
+*.log
+*.tmp
+
+# 🔒 IDE (opzionale)
+
+.vscode/
+.idea/
+
+*.zip
