@@ -1,0 +1,122 @@
+[
+  {
+    "arabic": "تَظُنُّهُ",
+    "correct": "lo credi",
+    "options": ["lo credi", "lo vendi", "lo compri", "lo perdi"]
+  },
+  {
+    "arabic": "لِلْوَهْلَةِ",
+    "correct": "a prima vista",
+    "options": ["a prima vista", "lentamente", "all’improvviso", "di notte"]
+  },
+  {
+    "arabic": "تُبَاعُ",
+    "correct": "viene venduto",
+    "options": ["viene venduto", "viene comprato", "viene cucinato", "viene trovato"]
+  },
+  {
+    "arabic": "تُشْتَرَى",
+    "correct": "viene comprato",
+    "options": ["viene comprato", "viene venduto", "viene coltivato", "viene distrutto"]
+  },
+  {
+    "arabic": "يُمَيِّزُ",
+    "correct": "caratterizza",
+    "options": ["caratterizza", "nasconde", "compra", "divide"]
+  },
+  {
+    "arabic": "الْبَاعَةُ",
+    "correct": "venditori",
+    "options": ["venditori", "clienti", "contadini", "artigiani"]
+  },
+  {
+    "arabic": "وَرِثْتُ",
+    "correct": "ho ereditato",
+    "options": ["ho ereditato", "ho perso", "ho comprato", "ho trovato"]
+  },
+  {
+    "arabic": "نَزْرَعُهُ",
+    "correct": "lo coltiviamo",
+    "options": ["lo coltiviamo", "lo mangiamo", "lo vendiamo", "lo trasportiamo"]
+  },
+  {
+    "arabic": "أُنْشِئَ",
+    "correct": "fu fondato",
+    "options": ["fu fondato", "fu venduto", "fu chiuso", "fu dimenticato"]
+  },
+  {
+    "arabic": "يُطْلَقُ",
+    "correct": "viene chiamato",
+    "options": ["viene chiamato", "viene comprato", "viene dimenticato", "viene nascosto"]
+  },
+  {
+    "arabic": "يَجْلِبْنَ",
+    "correct": "portano",
+    "options": ["portano", "vendono", "tagliano", "nascondono"]
+  },
+  {
+    "arabic": "مُجْزِيًا",
+    "correct": "redditizio",
+    "options": ["redditizio", "costoso", "inutile", "breve"]
+  },
+  {
+    "arabic": "سَأَدَّخِرُهُ",
+    "correct": "lo risparmierò",
+    "options": ["lo risparmierò", "lo spenderò", "lo perderò", "lo venderò"]
+  },
+  {
+    "arabic": "يَمْتَازُ",
+    "correct": "si distingue",
+    "options": ["si distingue", "si nasconde", "si rompe", "si vende"]
+  },
+  {
+    "arabic": "مَعْرُوضَةٌ",
+    "correct": "esposta",
+    "options": ["esposta", "venduta", "nascosta", "raccolta"]
+  },
+  {
+    "arabic": "يُقْطَفُ",
+    "correct": "viene raccolto",
+    "options": ["viene raccolto", "viene cucinato", "viene venduto", "viene importato"]
+  },
+  {
+    "arabic": "تَحْصِيلِ",
+    "correct": "ottenimento",
+    "options": ["ottenimento", "perdita", "vendita", "acquisto"]
+  },
+  {
+    "arabic": "يَرْتَادُهُ",
+    "correct": "lo frequentano",
+    "options": ["lo frequentano", "lo evitano", "lo distruggono", "lo costruiscono"]
+  },
+  {
+    "arabic": "اِزْدِحَامًا",
+    "correct": "affollamento",
+    "options": ["affollamento", "silenzio", "ordine", "isolamento"]
+  },
+  {
+    "arabic": "مُقَابِلٍ",
+    "correct": "compenso",
+    "options": ["compenso", "lavoro", "tempo", "viaggio"]
+  },
+  {
+    "arabic": "اِسْتِمْرَارِ",
+    "correct": "continuità",
+    "options": ["continuità", "fine", "pausa", "ritardo"]
+  },
+  {
+    "arabic": "تَرْشِيحِهِ",
+    "correct": "la sua candidatura",
+    "options": ["la sua candidatura", "la sua vendita", "la sua chiusura", "la sua perdita"]
+  },
+  {
+    "arabic": "الْإِقْبَالُ",
+    "correct": "affluenza",
+    "options": ["affluenza", "povertà", "calore", "silenzio"]
+  },
+  {
+    "arabic": "رَاغِبٌ",
+    "correct": "desideroso",
+    "options": ["desideroso", "stanco", "arrabbiato", "indifferente"]
+  }
+]

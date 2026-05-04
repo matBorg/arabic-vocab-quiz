@@ -1,0 +1,42 @@
+[
+  {
+    "arabic": "صَبَاحٌ",
+    "correct": "mattina",
+    "options": ["mattina", "sera", "notte", "giorno"]
+  },
+  {
+    "arabic": "خَاتِمٌ",
+    "correct": "anello",
+    "options": ["anello", "collana", "bracciale", "orologio"]
+  },
+  {
+    "arabic": "حِصَانٌ",
+    "correct": "cavallo",
+    "options": ["cavallo", "asino", "cane", "gatto"]
+  },
+  {
+    "arabic": "صَحْنٌ",
+    "correct": "piatto",
+    "options": ["piatto", "bicchiere", "tavolo", "sedia"]
+  },
+  {
+    "arabic": "سَحَابٌ",
+    "correct": "nuvola",
+    "options": ["nuvola", "pioggia", "vento", "sole"]
+  },
+  {
+    "arabic": "خُبْزٌ",
+    "correct": "pane",
+    "options": ["pane", "riso", "carne", "latte"]
+  },
+  {
+    "arabic": "حِزَامٌ",
+    "correct": "cintura",
+    "options": ["cintura", "scarpa", "maglia", "pantaloni"]
+  },
+  {
+    "arabic": "صُخُورٌ",
+    "correct": "rocce",
+    "options": ["rocce", "montagne", "sabbia", "fiume"]
+  }
+]

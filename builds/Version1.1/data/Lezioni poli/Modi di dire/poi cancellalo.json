@@ -1,0 +1,42 @@
+[
+  {
+    "arabic": "شَمْسٌ",
+    "correct": "sole",
+    "options": ["sole", "luna", "stella", "cielo"]
+  },
+  {
+    "arabic": "ثَعْلَبٌ",
+    "correct": "volpe",
+    "options": ["volpe", "lupo", "cane", "gatto"]
+  },
+  {
+    "arabic": "حِذَاءٌ",
+    "correct": "scarpa",
+    "options": ["scarpa", "camicia", "pantaloni", "cappello"]
+  },
+  {
+    "arabic": "مِحْفَظَةٌ",
+    "correct": "portafoglio",
+    "options": ["portafoglio", "borsa", "zaino", "valigia"]
+  },
+  {
+    "arabic": "زَيْتُونٌ",
+    "correct": "olive",
+    "options": ["olive", "mele", "uva", "arance"]
+  },
+  {
+    "arabic": "مُثَلَّثٌ",
+    "correct": "triangolo",
+    "options": ["triangolo", "quadrato", "cerchio", "rettangolo"]
+  },
+  {
+    "arabic": "ظُفْرٌ",
+    "correct": "unghia",
+    "options": ["unghia", "dito", "mano", "braccio"]
+  },
+  {
+    "arabic": "مَنْزِلٌ",
+    "correct": "casa",
+    "options": ["casa", "scuola", "ufficio", "negozio"]
+  }
+]

@@ -8,17 +8,12 @@ import time
 DATA_FOLDER = "data"
 PROGRESS_FILE = "progress.json"
 
-FEEDBACK_DELAY = 900  # ms tra risposta e prossima domanda
+FEEDBACK_DELAY = 900  # ms
 
 
 # ------------------------
 # DATA UTILS
 # ------------------------
-
-def load_flashcards(filename):
-    with open(os.path.join(DATA_FOLDER, filename), "r", encoding="utf-8") as f:
-        return json.load(f)
-
 
 def load_progress():
     if not os.path.exists(PROGRESS_FILE):
@@ -70,22 +65,17 @@ def sort_by_performance(progress):
     return sorted(progress.items(),
                   key=lambda x: x[1]["correct"] / x[1]["shown"] if x[1]["shown"] else 0)
 
-
 def sort_by_shown(progress):
     return sorted(progress.items(), key=lambda x: x[1]["shown"], reverse=True)
-
 
 def sort_by_last_seen(progress):
     return sorted(progress.items(), key=lambda x: x[1]["last_seen"], reverse=True)
 
-
 def sort_by_first_seen(progress):
     return sorted(progress.items(), key=lambda x: x[1]["first_seen"])
 
-
 def sort_alphabetical(progress):
     return sorted(progress.items(), key=lambda x: x[0])
-
 
 def sort_by_priority(progress):
     def score(item):
@@ -94,28 +84,7 @@ def sort_by_priority(progress):
             return 0
         accuracy = stats["correct"] / stats["shown"]
         return accuracy * stats["shown"]
-
     return sorted(progress.items(), key=score)
-
-
-# ------------------------
-# REVIEW
-# ------------------------
-
-def get_review_cards(cards, progress, limit=10):
-    def difficulty(card):
-        word = card["arabic"]
-        stats = progress.get(word, {"correct": 0, "shown": 0})
-
-        if stats["shown"] == 0:
-            return 0
-
-        accuracy = stats["correct"] / stats["shown"]
-        recency = time.time() - stats["last_seen"]
-
-        return accuracy * stats["shown"] - recency * 0.00001
-
-    return sorted(cards, key=difficulty)[:limit]
 
 
 # ------------------------
@@ -133,19 +102,36 @@ class App:
         self.style.theme_use("clam")
 
         self.style.configure("TButton", font=("Arial", 12), padding=6)
-        self.style.configure("Title.TLabel", font=("Arial", 22, "bold"),
-                             foreground="white", background="#0f172a")
-        self.style.configure("Card.TLabel", font=("Arial", 38, "bold"),
-                             background="#0f172a", foreground="white")
+        self.style.configure("Title.TLabel",
+                             font=("Arial", 22, "bold"),
+                             foreground="white",
+                             background="#0f172a")
+        self.style.configure("Card.TLabel",
+                             font=("Arial", 38, "bold"),
+                             background="#0f172a",
+                             foreground="white")
 
         self.progress = load_progress()
-        self.sort_mode = tk.StringVar(value="performance")
 
         self.cards = []
         self.index = 0
         self.score = 0
 
+        # GAME NAV STATE
+        self.game_path = DATA_FOLDER
+        self.game_history = []
+
+        # REVIEW NAV STATE
+        self.review_path = DATA_FOLDER
+        self.review_history = []
+
+        self.sort_mode = tk.StringVar(value="performance")
+
         self.main_menu()
+
+    # ------------------------
+    # UTILS UI
+    # ------------------------
 
     def clear(self):
         for w in self.root.winfo_children():
@@ -165,54 +151,139 @@ class App:
         ttk.Button(self.root, text="📊 Dashboard", command=self.dashboard).pack(pady=10)
 
     # ------------------------
-    # GAME MENU (QUI HO AGGIUNTO WORDLE)
+    # GAME — FILE BROWSER
     # ------------------------
 
     def game_menu(self):
+        self.game_path = DATA_FOLDER
+        self.game_history = []
+        self.open_game_folder(self.game_path)
+
+    def open_game_folder(self, path):
         self.clear()
 
-        ttk.Label(self.root, text="Modalità di gioco", style="Title.TLabel").pack(pady=20)
+        ttk.Label(self.root, text=path, style="Title.TLabel").pack(pady=10)
 
-        ttk.Button(self.root, text="🎯 Risposta multipla (Quiz)",
-                command=self.quiz_file_menu).pack(pady=10)
+        if self.game_history:
+            ttk.Button(
+                self.root,
+                text="← Indietro",
+                command=self.go_back_game
+            ).pack(pady=5)
 
-        ttk.Button(self.root, text="← Menu",
-                command=self.main_menu).pack(pady=20)
-    # ------------------------
-    # QUIZ CLASSICO
-    # ------------------------
-    def quiz_file_menu(self):
-        self.clear()
+        items = sorted(os.listdir(path))
 
-        ttk.Label(self.root, text="Scegli set Quiz", style="Title.TLabel").pack(pady=20)
+        for item in items:
+            full_path = os.path.join(path, item)
 
-        for file in os.listdir(DATA_FOLDER):
-            ttk.Button(self.root, text=file,
-                    command=lambda f=file: self.start_game(f)).pack(pady=5)
+            if os.path.isdir(full_path):
+                ttk.Button(
+                    self.root,
+                    text=f"📁 {item}",
+                    command=lambda p=full_path: self.enter_game_folder(p)
+                ).pack(pady=3)
 
-        ttk.Button(self.root, text="← Indietro",
-                command=self.game_menu).pack(pady=20)
+            elif item.endswith(".json"):
+                ttk.Button(
+                    self.root,
+                    text=f"📄 {item}",
+                    command=lambda p=full_path: self.start_game(p)
+                ).pack(pady=3)
 
-    def wordle_file_menu(self):
-        self.clear()
+        ttk.Button(self.root, text="← Menu", command=self.main_menu).pack(pady=10)
 
-        ttk.Label(self.root, text="Scegli set Wordle", style="Title.TLabel").pack(pady=20)
+    def enter_game_folder(self, path):
+        self.game_history.append(self.game_path)
+        self.game_path = path
+        self.open_game_folder(path)
 
-        for file in os.listdir(DATA_FOLDER):
-            ttk.Button(self.root, text=file,
-                    command=lambda f=file: self.start_wordle(f)).pack(pady=5)
+    def go_back_game(self):
+        self.game_path = self.game_history.pop()
+        self.open_game_folder(self.game_path)
 
-        ttk.Button(self.root, text="← Indietro",
-                command=self.game_menu).pack(pady=20)
+    def start_game(self, filepath):
+        with open(filepath, "r", encoding="utf-8") as f:
+            cards = json.load(f)
 
-    def start_game(self, filename):
-        self.cards = load_flashcards(filename)
+        self.cards = cards
         random.shuffle(self.cards)
 
         self.index = 0
         self.score = 0
 
         self.show_question()
+
+    # ------------------------
+    # REVIEW SYSTEM — FILE BROWSER
+    # ------------------------
+
+    def review_menu(self):
+        self.review_path = DATA_FOLDER
+        self.review_history = []
+        self.open_review_folder(self.review_path)
+
+    def open_review_folder(self, path):
+        self.clear()
+
+        ttk.Label(self.root, text=path, style="Title.TLabel").pack(pady=10)
+
+        if self.review_history:
+            ttk.Button(
+                self.root,
+                text="← Indietro",
+                command=self.go_back_review
+            ).pack(pady=5)
+
+        items = sorted(os.listdir(path))
+
+        for item in items:
+            full_path = os.path.join(path, item)
+
+            if os.path.isdir(full_path):
+                ttk.Button(
+                    self.root,
+                    text=f"📁 {item}",
+                    command=lambda p=full_path: self.enter_review_folder(p)
+                ).pack(pady=3)
+
+            elif item.endswith(".json"):
+                ttk.Button(
+                    self.root,
+                    text=f"📄 {item}",
+                    command=lambda p=full_path: self.start_review(p)
+                ).pack(pady=3)
+
+        ttk.Button(self.root, text="← Menu", command=self.main_menu).pack(pady=10)
+
+    def enter_review_folder(self, path):
+        self.review_history.append(self.review_path)
+        self.review_path = path
+        self.open_review_folder(path)
+
+    def go_back_review(self):
+        self.review_path = self.review_history.pop()
+        self.open_review_folder(self.review_path)
+
+    # ------------------------
+    # REVIEW START
+    # ------------------------
+
+    def start_review(self, filepath):
+        with open(filepath, "r", encoding="utf-8") as f:
+            cards = json.load(f)
+
+        self.cards = cards  # qui puoi inserire filtro intelligente se vuoi
+
+        random.shuffle(self.cards)
+
+        self.index = 0
+        self.score = 0
+
+        self.show_question()
+
+    # ------------------------
+    # QUIZ CORE
+    # ------------------------
 
     def show_question(self):
         self.clear()
@@ -223,18 +294,19 @@ class App:
 
         card = self.cards[self.index]
 
-        self.card_label = ttk.Label(self.root, text=card["arabic"], style="Card.TLabel")
-        self.card_label.pack(pady=40)
+        ttk.Label(self.root, text=card["arabic"], style="Card.TLabel").pack(pady=40)
 
         self.feedback_label = tk.Label(self.root, text="", font=("Arial", 16), bg="#0f172a")
         self.feedback_label.pack(pady=10)
 
-        btn_frame = tk.Frame(self.root, bg="#0f172a")
-        btn_frame.pack()
-
         for opt in card["options"]:
-            ttk.Button(btn_frame, text=opt,
-                       command=lambda o=opt: self.check_answer(o)).pack(pady=5, fill="x")
+            ttk.Button(
+                self.root,
+                text=opt,
+                command=lambda o=opt: self.check_answer(o)
+            ).pack(pady=5)
+
+        ttk.Button(self.root, text="← Menu", command=self.main_menu).pack(pady=15)
 
     def check_answer(self, selected):
         card = self.cards[self.index]
@@ -244,15 +316,15 @@ class App:
 
         if correct:
             self.score += 1
-            self.show_feedback("✔ Corretto", "#22c55e")
+            self.feedback_label.config(text="✔ Corretto", fg="#22c55e")
         else:
-            self.show_feedback(f"✘ Sbagliato (giusto: {card['correct']})", "#ef4444")
+            self.feedback_label.config(
+                text=f"✘ Sbagliato (giusto: {card['correct']})",
+                fg="#ef4444"
+            )
 
         self.index += 1
         self.root.after(FEEDBACK_DELAY, self.show_question)
-
-    def show_feedback(self, text, color):
-        self.feedback_label.config(text=text, fg=color)
 
     def show_result(self):
         save_progress(self.progress)
@@ -268,93 +340,6 @@ class App:
         ttk.Button(self.root, text="Menu", command=self.main_menu).pack(pady=20)
 
     # ------------------------
-    # REVIEW
-    # ------------------------
-
-    def review_menu(self):
-        self.clear()
-
-        ttk.Label(self.root, text="Ripasso", style="Title.TLabel").pack(pady=20)
-
-        for file in os.listdir(DATA_FOLDER):
-            ttk.Button(self.root, text=file,
-                       command=lambda f=file: self.start_review(f)).pack(pady=5)
-
-        ttk.Button(self.root, text="← Menu", command=self.main_menu).pack(pady=20)
-
-    def start_review(self, filename):
-        cards = load_flashcards(filename)
-        self.cards = get_review_cards(cards, self.progress)
-
-        self.index = 0
-        self.score = 0
-
-        self.show_question()
-
-    # ------------------------
-    # WORDLE MODE
-    # ------------------------
-
-
-
-    def update_grid(self):
-        for r in range(self.max_attempts):
-            guess = self.guesses[r]
-
-            for i in range(len(self.target)):
-                if i < len(guess):
-                    self.rows[r][i].config(text=guess[i])
-                else:
-                    self.rows[r][i].config(text="_")
-
-    def check_attempt(self):
-        guess = self.guesses[self.current_attempt]
-        target = self.target
-
-        result = []
-
-        for i in range(len(target)):
-            if guess[i] == target[i]:
-                self.rows[self.current_attempt][i].config(bg="green")
-                result.append("🟩")
-
-                if guess[i] in self.keyboard:
-                    self.keyboard[guess[i]].config(bg="green", fg="white")
-
-            elif guess[i] in target:
-                self.rows[self.current_attempt][i].config(bg="gold")
-                result.append("🟨")
-
-                if guess[i] in self.keyboard:
-                    self.keyboard[guess[i]].config(bg="gold")
-
-            else:
-                self.rows[self.current_attempt][i].config(bg="gray")
-                result.append("⬜")
-
-                if guess[i] in self.keyboard:
-                    self.keyboard[guess[i]].config(bg="light gray")
-
-        self.feedback.config(text="".join(result))
-
-        # WIN
-        if guess == target:
-            self.feedback.config(text="🎉 CORRETTO!")
-            self.root.after(1200, self.next_word)
-            return
-
-        self.current_attempt += 1
-
-        # LOSE
-        if self.current_attempt >= self.max_attempts:
-            self.feedback.config(text=f"❌ Fine! Era: {self.target}")
-            self.root.after(1500, self.next_word)
-
-
-    def next_word(self):
-        self.index += 1
-        self.wordle_round()
-    # ------------------------
     # DASHBOARD
     # ------------------------
 
@@ -363,11 +348,55 @@ class App:
 
         ttk.Label(self.root, text="Dashboard", style="Title.TLabel").pack(pady=10)
 
-        frame = tk.Frame(self.root, bg="#0f172a")
-        frame.pack(fill="both", expand=True)
+        # Sorting controls
+        sort_frame = tk.Frame(self.root, bg="#0f172a")
+        sort_frame.pack(pady=5)
+
+        sorts = [
+            ("Performance", "performance"),
+            ("Viste", "shown"),
+            ("Recenti", "recent"),
+            ("Prime viste", "first"),
+            ("A-Z", "alpha"),
+            ("Priorità", "priority"),
+        ]
+
+        for label, mode in sorts:
+            tk.Radiobutton(
+                sort_frame,
+                text=label,
+                variable=self.sort_mode,
+                value=mode,
+                command=self.dashboard,
+                bg="#0f172a",
+                fg="white",
+                selectcolor="#1e293b",
+                activebackground="#0f172a",
+                activeforeground="white"
+            ).pack(side="left", padx=4)
+
+        # Scrollable word list
+        container = tk.Frame(self.root, bg="#0f172a")
+        container.pack(fill="both", expand=True, padx=10, pady=5)
+
+        canvas = tk.Canvas(container, bg="#0f172a", highlightthickness=0)
+        scrollbar = ttk.Scrollbar(container, orient="vertical", command=canvas.yview)
+        scroll_frame = tk.Frame(canvas, bg="#0f172a")
+
+        scroll_frame.bind(
+            "<Configure>",
+            lambda e: canvas.configure(scrollregion=canvas.bbox("all"))
+        )
+
+        canvas.create_window((0, 0), window=scroll_frame, anchor="nw")
+        canvas.configure(yscrollcommand=scrollbar.set)
+
+        canvas.pack(side="left", fill="both", expand=True)
+        scrollbar.pack(side="right", fill="y")
+
+        canvas.bind_all("<MouseWheel>", lambda e: canvas.yview_scroll(-1 * (e.delta // 120), "units"))
 
         mode = self.sort_mode.get()
-
         if mode == "performance":
             items = sort_by_performance(self.progress)
         elif mode == "shown":
@@ -381,20 +410,26 @@ class App:
         elif mode == "priority":
             items = sort_by_priority(self.progress)
         else:
-            items = self.progress.items()
+            items = list(self.progress.items())
 
-        for word, stats in items:
-            p = get_percent(self.progress, word)
-            color = percent_to_color(p)
+        if not items:
+            tk.Label(scroll_frame, text="Nessun dato ancora. Fai un quiz!",
+                     bg="#0f172a", fg="#94a3b8", font=("Arial", 14)).pack(pady=20)
+        else:
+            for word, stats in items:
+                p = get_percent(self.progress, word)
+                color = percent_to_color(p)
+                tk.Label(
+                    scroll_frame,
+                    text=f"{word}   {p*100:.0f}%   viste {stats['shown']}   corrette {stats['correct']}",
+                    bg=color,
+                    fg="black",
+                    anchor="w",
+                    padx=10,
+                    font=("Arial", 12)
+                ).pack(fill="x", pady=2)
 
-            tk.Label(frame,
-                     text=f"{word} | {p*100:.0f}% | viste {stats['shown']}",
-                     bg=color,
-                     fg="black",
-                     anchor="w",
-                     padx=10).pack(fill="x", pady=2)
-
-        ttk.Button(self.root, text="Menu", command=self.main_menu).pack(pady=10)
+        ttk.Button(self.root, text="← Menu", command=self.main_menu).pack(pady=8)
 
 
 # ------------------------

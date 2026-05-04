@@ -10,6 +10,54 @@ Include:
 
 ---
 
+# 🚀 Come avviare il programma
+
+### 1. Vai su GitHub
+
+Apri la pagina del progetto.
+
+---
+
+### 2. Scarica il programma
+
+Vai su:
+
+👉 **Releases**
+
+Trovi questa sezione sulla destra o in alto nel repository.
+
+---
+
+### 3. Scarica la versione più recente
+
+Clicca sull’ultima release disponibile e scarica il file:
+
+```text
+ArabicFlashcards.zip
+```
+
+---
+
+### 4. Estrai il file
+
+* Tasto destro → “Estrai tutto”
+* Apri la cartella estratta
+
+---
+
+### 5. Avvia il programma
+
+Doppio click su:
+
+```text
+app.exe
+```
+
+---
+
+## 🎉 Fatto!
+
+Il programma si avvia senza installare Python o altro.
 
 
 

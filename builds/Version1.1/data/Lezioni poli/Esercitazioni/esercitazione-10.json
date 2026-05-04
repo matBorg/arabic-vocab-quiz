@@ -1,0 +1,167 @@
+[
+  {
+    "arabic": "مُحَمَّدٌ",
+    "correct": "Muhammad",
+    "options": ["Ahmed", "Muhammad", "Ali", "Omar"]
+  },
+  {
+    "arabic": "الْحَدِيقَةِ",
+    "correct": "giardino",
+    "options": ["casa", "giardino", "scuola", "strada"]
+  },
+  {
+    "arabic": "فِي",
+    "correct": "in",
+    "options": ["su", "in", "con", "tra"]
+  },
+  {
+    "arabic": "الْكَلْبُ",
+    "correct": "cane",
+    "options": ["gatto", "uccello", "cane", "cavallo"]
+  },
+  {
+    "arabic": "تَحْتَ",
+    "correct": "sotto",
+    "options": ["sopra", "dentro", "sotto", "accanto"]
+  },
+  {
+    "arabic": "الشَّجَرَةِ",
+    "correct": "albero",
+    "options": ["fiore", "erba", "albero", "frutto"]
+  },
+  {
+    "arabic": "الثَّعْلَبُ",
+    "correct": "volpe",
+    "options": ["lupo", "volpe", "leone", "orso"]
+  },
+  {
+    "arabic": "جَدِيدٌ",
+    "correct": "nuovo",
+    "options": ["vecchio", "nuovo", "rotto", "grande"]
+  },
+  {
+    "arabic": "هُوَ",
+    "correct": "lui",
+    "options": ["lei", "loro", "lui", "io"]
+  },
+  {
+    "arabic": "طَالِبٌ",
+    "correct": "studente",
+    "options": ["insegnante", "studente", "medico", "ingegnere"]
+  },
+  {
+    "arabic": "الْحَقِيبَةِ",
+    "correct": "borsa",
+    "options": ["libro", "borsa", "penna", "sedia"]
+  },
+  {
+    "arabic": "الْقَلَمُ",
+    "correct": "penna",
+    "options": ["matita", "quaderno", "penna", "gomma"]
+  },
+  {
+    "arabic": "بِنْتٌ",
+    "correct": "ragazza",
+    "options": ["ragazzo", "donna", "ragazza", "bambino"]
+  },
+  {
+    "arabic": "إيطَالِيةٌ",
+    "correct": "italiana",
+    "options": ["francese", "italiana", "spagnola", "tedesca"]
+  },
+  {
+    "arabic": "أَنَا",
+    "correct": "io",
+    "options": ["tu", "noi", "lui", "io"]
+  },
+  {
+    "arabic": "الطَّالِبُ",
+    "correct": "lo studente",
+    "options": ["lo studente", "la studentessa", "l’insegnante", "il medico"]
+  },
+  {
+    "arabic": "عَرَبِيٌّ",
+    "correct": "arabo",
+    "options": ["italiano", "arabo", "francese", "inglese"]
+  },
+  {
+    "arabic": "طَالِبَةٌ",
+    "correct": "studentessa",
+    "options": ["studentessa", "insegnante", "dottoressa", "ragazza"]
+  },
+  {
+    "arabic": "هَذَا",
+    "correct": "questo",
+    "options": ["quello", "questo", "qui", "lì"]
+  },
+  {
+    "arabic": "كِتَابٌ",
+    "correct": "libro",
+    "options": ["quaderno", "penna", "libro", "giornale"]
+  },
+  {
+    "arabic": "الْكِتَابُ",
+    "correct": "il libro",
+    "options": ["il quaderno", "il libro", "la penna", "la casa"]
+  },
+  {
+    "arabic": "هُنَا",
+    "correct": "qui",
+    "options": ["lì", "qui", "lontano", "sopra"]
+  },
+  {
+    "arabic": "الْجَامِعَةِ",
+    "correct": "università",
+    "options": ["scuola", "università", "biblioteca", "ospedale"]
+  },
+  {
+    "arabic": "الْمَاءُ",
+    "correct": "acqua",
+    "options": ["latte", "acqua", "tè", "succo"]
+  },
+  {
+    "arabic": "قَلِيلٌ",
+    "correct": "poco",
+    "options": ["molto", "poco", "grande", "veloce"]
+  },
+  {
+    "arabic": "الْإجَابَةُ",
+    "correct": "risposta",
+    "options": ["domanda", "risposta", "lezione", "esercizio"]
+  },
+  {
+    "arabic": "صَحِيحَةٌ",
+    "correct": "corretta",
+    "options": ["sbagliata", "corretta", "facile", "veloce"]
+  },
+  {
+    "arabic": "الْقَاهِرَةُ",
+    "correct": "Il Cairo",
+    "options": ["Roma", "Il Cairo", "Parigi", "Madrid"]
+  },
+  {
+    "arabic": "مَدِينَةٌ",
+    "correct": "città",
+    "options": ["paese", "città", "villaggio", "regione"]
+  },
+  {
+    "arabic": "مِصْرِيَّةٌ",
+    "correct": "egiziana",
+    "options": ["italiana", "egiziana", "turca", "greca"]
+  },
+  {
+    "arabic": "كَمَالٌ",
+    "correct": "Kamal",
+    "options": ["Kamal", "Omar", "Ali", "Hassan"]
+  },
+  {
+    "arabic": "مُهَنْدِسٌ",
+    "correct": "ingegnere",
+    "options": ["medico", "insegnante", "ingegnere", "architetto"]
+  },
+  {
+    "arabic": "مَاهِرٌ",
+    "correct": "abile",
+    "options": ["lento", "abile", "debole", "triste"]
+  }
+]

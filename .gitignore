@@ -39,3 +39,7 @@ Thumbs.db
 .idea/
 
 *.zip
+
+
+# Script miei
+make_build.py
